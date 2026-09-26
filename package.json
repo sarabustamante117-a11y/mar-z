@@ -2,7 +2,7 @@
   "name": "mesa-de-solicitudes",
   "version": "1.0.0",
   "private": true,
-  "description": "Aplicacion local de solicitudes con acceso por rol.",
+  "description": "Aplicación local de solicitudes con acceso por rol.",
   "scripts": {
     "start": "node server.js",
     "test": "node --test"
