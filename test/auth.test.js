@@ -19,20 +19,20 @@ test("el login responde lo mismo para un correo inexistente y una contraseña in
   assert.deepEqual(await wrongPassword.json(), { error: "Credenciales inválidas." });
 });
 
-test("las rutas protegidas bloquean accesos sin sesión o con rol diferente", async (t) => {
+test("las rutas privadas requieren el rol correcto", async (t) => {
   const { login, request } = await createTestContext(t);
-  const anonymousPage = await request("/coordinacion", null, { redirect: "manual" });
+  const anonymousPage = await request("/bandeja", null, { redirect: "manual" });
   const requester = await login("ana@demo.local");
-  const forbiddenPage = await request("/coordinacion", requester.cookie);
+  const forbiddenPage = await request("/bandeja", requester.cookie);
   const allowedPage = await request("/mis-solicitudes", requester.cookie);
-  const auditor = await login("auditoria@demo.local");
-  const auditorWrite = await request("/api/requests", auditor.cookie, {
+  const support = await login("soporte@demo.local");
+  const supportCreate = await request("/api/requests", support.cookie, {
     method: "POST",
-    body: JSON.stringify({ title: "No permitido", description: "Solo lectura", category: "Otro" }),
+    body: JSON.stringify({ title: "No permitido", description: "Solo soporte", category: "Otro" }),
   });
 
   assert.equal(anonymousPage.status, 302);
   assert.equal(forbiddenPage.status, 403);
   assert.equal(allowedPage.status, 200);
-  assert.equal(auditorWrite.status, 403);
+  assert.equal(supportCreate.status, 403);
 });

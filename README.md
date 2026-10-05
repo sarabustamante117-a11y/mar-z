@@ -1,32 +1,39 @@
-# Mesa de solicitudes
+# Mesa de soporte
 
-Aplicación local ligera para crear y consultar solicitudes con autorización por rol. Requiere Node.js 20 o posterior; no necesita instalar dependencias.
+MVP local de solicitudes de soporte con Node.js, Express y JSON. Requiere Node.js 20 o posterior.
 
-## Iniciar
+## Ejecutar
 
 ```sh
+npm install
+npm run seed
 npm start
 ```
 
-Abre http://127.0.0.1:3000. Las solicitudes se guardan en `data/store.json` y se conservan al reiniciar el servidor.
+Abre http://127.0.0.1:3000. Los datos se guardan en `data/store.json`.
 
-## Cuentas de demostración
+## Usuarios demo
 
-Todas las cuentas usan la contraseña `Demo2026!`.
+La contraseña de todas las cuentas es `Demo2026!`.
 
 | Rol | Correo |
 | --- | --- |
-| Solicitante Ana | `ana@demo.local` |
-| Solicitante Luis | `luis@demo.local` |
-| Agente coordinador | `coordinacion@demo.local` |
-| Auditor | `auditoria@demo.local` |
+| Solicitante | `ana@demo.local` |
+| Solicitante | `luis@demo.local` |
+| Soporte | `soporte@demo.local` |
 
-Los solicitantes solo pueden crear solicitudes y consultar las propias. El coordinador puede consultar todas, cambiar prioridades y ordenar la bandeja por prioridad, estado o fecha. El auditor puede consultar el registro completo en modo de solo lectura. Los intentos de acceso directo a páginas ajenas al rol se bloquean en el servidor.
+## Incluye
+
+- Login con contraseñas bcrypt y cierre de sesión.
+- Solicitantes crean solicitudes y solo ven las propias.
+- Soporte ve las solicitudes, comenta y cambia su estado.
+- El solicitante puede confirmar una solución o reabrirla con un comentario.
+- Los comentarios se agregan al historial y no se editan ni eliminan.
+
+Este MVP no incluye auditoría, asignación, edición de prioridad, filtros, métricas ni exportación.
 
 ## Pruebas
 
 ```sh
 npm test
 ```
-
-Esta aplicación es una base local de demostración. Para publicarla se deben añadir HTTPS, almacenamiento seguro de sesiones compartido, administración de usuarios y protección adicional contra intentos automatizados de inicio de sesión.

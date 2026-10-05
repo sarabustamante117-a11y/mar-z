@@ -5,9 +5,14 @@
   "description": "Aplicación local de solicitudes con acceso por rol.",
   "scripts": {
     "start": "node server.js",
+    "seed": "node seed.js",
     "test": "node --test"
   },
   "engines": {
     "node": ">=20"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "express": "^5.2.1"
   }
 }

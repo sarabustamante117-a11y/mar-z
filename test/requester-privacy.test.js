@@ -6,6 +6,20 @@ test("cada solicitante consulta únicamente sus solicitudes y no abre detalles a
   const { login, request } = await createTestContext(t);
   const ana = await login("ana@demo.local");
   const luis = await login("luis@demo.local");
+
+  for (const [cookie, title] of [[ana.cookie, "Solicitud de Ana"], [luis.cookie, "Solicitud de Luis"]]) {
+    for (let number = 1; number <= 2; number += 1) {
+      await request("/api/requests", cookie, {
+        method: "POST",
+        body: JSON.stringify({
+          title: `${title} ${number}`,
+          description: "Descripción de prueba.",
+          category: "Acceso",
+        }),
+      });
+    }
+  }
+
   const anaRequests = await (await request("/api/requests", ana.cookie)).json();
   const luisRequests = await (await request("/api/requests", luis.cookie)).json();
 
